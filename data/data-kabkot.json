@@ -1,0 +1,14 @@
+{
+  "Malang": {
+    "luas_sawah_ha": 1200,
+    "luas_baku_ha": 1500,
+    "realisasi_ha": 900,
+    "ip_padi": 75.0
+  },
+  "Pasuruan": {
+    "luas_sawah_ha": 18500,
+    "luas_baku_ha": 20000,
+    "realisasi_ha": 14000,
+    "ip_padi": 70.0
+  }
+}
