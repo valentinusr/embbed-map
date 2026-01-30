@@ -1,5 +1,5 @@
+  //load-map
 const map = L.map("map").setView([-7.5, 112.7], 8);
-
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
   {
@@ -8,6 +8,7 @@ L.tileLayer(
   }
 ).addTo(map);
 
+  //warna-wilayah
 function hashColor(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -17,15 +18,17 @@ function hashColor(str) {
   return `hsl(${h}, 70%, 55%)`;
 }
 
+  //formating-ha
 function formatHa(val) {
   if (val === undefined || val === null) return "-";
   return `${Number(val).toLocaleString("id-ID")} ha`;
 }
-
+  //formating-persentase
 function formatPercent(val) {
   if (val === undefined || val === null) return "-";
   return `${Number(val).toLocaleString("id-ID")} %`;
 }
+
 
 Promise.all([
   fetch("./data/38-kabkot.geojson").then((r) => r.json()),
@@ -49,6 +52,20 @@ Promise.all([
         const p = feature.properties || {};
         const nama = p.Kabupaten || "Wilayah";
 
+  // label-nama
+        const labelPoint = turf.pointOnFeature(feature);
+        const [lng, lat] = labelPoint.geometry.coordinates;
+
+        L.marker([lat, lng], {
+          icon: L.divIcon({
+          className: "kabkot-label",
+          html: nama
+        }),
+        interactive: false
+        }).addTo(map);
+        
+
+  //popup-detail 
         l.on("click", () => {
           const data = dataluas[nama] || {};
 
@@ -117,7 +134,7 @@ Promise.all([
           l.bindPopup(html, { maxWidth: 420 }).openPopup();
         });
 
-        //hover-map
+  //hover-map
         l.on("mouseover", () => {
           l.setStyle({ weight: 3, fillOpacity: 0.65 });
         });
@@ -127,6 +144,7 @@ Promise.all([
         });
       },
     }).addTo(map);
+
 
     map.fitBounds(layer.getBounds(), { padding: [20, 20] });
   })
