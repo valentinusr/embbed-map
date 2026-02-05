@@ -69,6 +69,35 @@ Promise.all([
         l.on("click", () => {
           const data = dataluas[nama] || {};
 
+          const tebuCarry = data?.tebu?.mt1 || 0;
+
+        const totalMT1 =
+          (data?.padi?.mt1 || 0) +
+          (data?.palawija?.mt1 || 0) +
+          (data?.lain_lain?.mt1 || 0) +
+          tebuCarry;
+                
+        const totalMT2 =
+          (data?.padi?.mt2 || 0) +
+          (data?.palawija?.mt2 || 0) +
+          (data?.lain_lain?.mt2 || 0) +
+          tebuCarry;
+                
+        const totalMT3 =
+          (data?.padi?.mt3 || 0) +
+          (data?.palawija?.mt3 || 0) +
+          (data?.lain_lain?.mt3 || 0) +
+          tebuCarry;
+                
+        // total tahunan (tebu 1x saja)
+        const totalALL =
+          (data?.padi?.total || 0) +
+          (data?.palawija?.total || 0) +
+          (data?.lain_lain?.total || 0) +
+          tebuCarry;
+
+
+
           const html = `
   <div style="min-width:360px">
     <div style="font-size:16px; font-weight:800; margin-bottom:10px;">
@@ -105,10 +134,18 @@ Promise.all([
 
         <tr style="border-bottom:1px solid #f1f5f9;">
           <td style="padding:6px 4px; color:#374151;">Tebu</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:700;">${formatHa(data?.tebu?.mt1)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:700;">${formatHa(data?.tebu?.mt2)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:700;">${formatHa(data?.tebu?.mt3)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(data?.tebu?.total)}</td>
+          <td style="padding:6px 4px; text-align:right; font-weight:700;">
+            ${formatHa(tebuCarry)}
+          </td>
+          <td style="padding:6px 4px; text-align:right; font-weight:700;">
+            ${formatHa(tebuCarry)}
+          </td>
+          <td style="padding:6px 4px; text-align:right; font-weight:700;">
+            ${formatHa(tebuCarry)}
+          </td>
+          <td style="padding:6px 4px; text-align:right; font-weight:800;">
+            ${formatHa(tebuCarry)}
+          </td>
         </tr>
 
         <tr style="border-bottom:1px solid #f1f5f9;">
@@ -120,11 +157,11 @@ Promise.all([
         </tr>
 
         <tr>
-          <td style="padding:6px 4px; color:#111827; font-weight:800;">TOTAL</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(data?.total?.mt1)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(data?.total?.mt2)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(data?.total?.mt3)}</td>
-          <td style="padding:6px 4px; text-align:right; font-weight:900;">${formatHa(data?.total?.total)}</td>
+        <td style="padding:6px 4px; color:#111827; font-weight:800;">TOTAL</td>
+        <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(totalMT1)}</td>
+        <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(totalMT2)}</td>
+        <td style="padding:6px 4px; text-align:right; font-weight:800;">${formatHa(totalMT3)}</td>
+        <td style="padding:6px 4px; text-align:right; font-weight:900;">${formatHa(totalALL)}</td>
         </tr>
       </tbody>
     </table>
