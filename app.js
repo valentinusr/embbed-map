@@ -1,33 +1,33 @@
-  //load-map
-const map = L.map("map").setView([-7.5, 112.7], 8);
-L.tileLayer(
-  "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-  {
-    maxZoom: 16,
-    attribution: "Tiles &copy; Esri",
-  }
-).addTo(map);
+//load-map
+  const map = L.map("map").setView([-7.5, 112.7], 8);
+  L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+    {
+      maxZoom: 16,
+      attribution: "Tiles &copy; Esri",
+    }
+  ).addTo(map);
 
-  //warna-wilayah
-function hashColor(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+//warna-wilayah
+  function hashColor(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const h = Math.abs(hash) % 360;
+    return `hsl(${h}, 70%, 55%)`;
   }
-  const h = Math.abs(hash) % 360;
-  return `hsl(${h}, 70%, 55%)`;
-}
 
-  //formating-ha
-function formatHa(val) {
-  if (val === undefined || val === null) return "-";
-  return `${Number(val).toLocaleString("id-ID")} ha`;
-}
-  //formating-persentase
-function formatPercent(val) {
-  if (val === undefined || val === null) return "-";
-  return `${Number(val).toLocaleString("id-ID")} %`;
-}
+//formating-ha
+  function formatHa(val) {
+    if (val === undefined || val === null) return "-";
+    return `${Number(val).toLocaleString("id-ID")} ha`;
+  }
+//formating-persentase
+  function formatPercent(val) {
+    if (val === undefined || val === null) return "-";
+    return `${Number(val).toLocaleString("id-ID")} %`;
+  }
 
 
 Promise.all([
@@ -52,7 +52,7 @@ Promise.all([
         const p = feature.properties || {};
         const nama = p.Kabupaten || "Wilayah";
 
-  // label-nama
+// label-nama
         const labelPoint = turf.pointOnFeature(feature);
         const [lng, lat] = labelPoint.geometry.coordinates;
 
@@ -65,7 +65,7 @@ Promise.all([
         }).addTo(map);
         
 
-  //popup-detail 
+//popup-detail 
         l.on("click", () => {
           const data = dataluas[nama] || {};
 
@@ -89,7 +89,7 @@ Promise.all([
           (data?.lain_lain?.mt3 || 0) +
           tebuCarry;
                 
-        // total tahunan (tebu 1x saja)
+// total tahunan (tebu 1x saja)
         const totalALL =
           (data?.padi?.total || 0) +
           (data?.palawija?.total || 0) +
@@ -171,7 +171,7 @@ Promise.all([
           l.bindPopup(html, { maxWidth: 420 }).openPopup();
         });
 
-  //hover-map
+//hover-map
         l.on("mouseover", () => {
           l.setStyle({ weight: 3, fillOpacity: 0.65 });
         });
