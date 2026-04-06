@@ -68,6 +68,7 @@ Promise.all([
 //popup-detail 
         l.on("click", () => {
           const data = dataluas[nama] || {};
+          const diLuas = data?.di_luas || 0;
 
           const tebuCarry = data?.tebu?.mt1 || 0;
 
@@ -99,10 +100,12 @@ Promise.all([
 
 
           const html = `
-  <div style="min-width:360px">
-    <div style="font-size:16px; font-weight:800; margin-bottom:10px;">
-      ${nama}
-    </div>
+  <div style="font-size:16px; font-weight:800; margin-bottom:10px;">
+    ${nama} 
+    <span style="font-size:12px; color:#6b7280; font-weight:800;">
+      (${formatHa(diLuas)})
+    </span>
+  </div>
 
     <table style="width:100%; border-collapse:collapse; font-size:13px;">
       <thead>
